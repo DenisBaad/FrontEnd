@@ -1,1 +1,63 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+@include mat.elevation-classes();
+@include mat.app-background();
+
+$my-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500);
+$my-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+$my-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$my-primary-dark: mat.m2-define-palette(mat.$m2-teal-palette, 300);
+$my-accent-dark: mat.m2-define-palette(mat.$m2-purple-palette);
+$my-warn-dark: mat.m2-define-palette(mat.$m2-red-palette);
+
+$my-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  )
+));
+
+$my-theme-dark: mat.m2-define-dark-theme((
+  color: (
+    primary: $my-primary-dark,
+    accent: $my-accent-dark,
+    warn: $my-warn-dark,
+  )
+));
+
+.theme-light {
+  @include mat.all-component-colors($my-theme);
+}
+
+.theme-dark {
+  @include mat.all-component-colors($my-theme-dark);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.content {
+  padding: 20px;
+  border-radius: 5px;
+  margin: -30px 34px 35px;
+}
+
+body.theme-dark .content {
+  background-color: #333333;
+  color: #f0f0f0;
+}
+
+body.theme-light .content {
+  background-color: white;
+  color: #333333;
+}
+
+.margem {
+  border-radius: 5px;
+  margin: -35px 1px 15px;
+  padding: 20px;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

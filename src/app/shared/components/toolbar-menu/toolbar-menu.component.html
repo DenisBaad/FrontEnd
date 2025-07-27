@@ -1,0 +1,37 @@
+<mat-toolbar class="toolbar-menu" [class.mat-elevation-z4]="shadow">
+  <mat-toolbar-row>
+    <a style="margin-right: 5px;" href="/dashboard" mat-button class="logo">
+      <mat-icon fontSet="fa" style="color: white;" fontIcon="fa-landmark"></mat-icon>
+      <span class="title" *ngIf="popText">Apolo Administration - {{menuTitle}}</span>
+      <span class="title" style="color: white;" *ngIf="!popText">Apolo Administration</span>
+    </a>
+
+    <div class="content-center">
+      <mat-slide-toggle [formControl]="toogleControl" [matTooltip]="toogleControl.value ? 'Ativar modo claro' : 'Ativar modo escuro'">
+        <span style="color: white !important; margin-right: 5px;">Dark Mode</span>
+      </mat-slide-toggle>
+    </div>
+
+    <div *ngIf="!isLoginPage">
+      <button mat-button style="color: white;" [matMenuTriggerFor]="menu">
+        <mat-icon class="space-right-icon">account_circle</mat-icon>
+        <span class="usuario-logado">{{USUARIO_LOGADO}}</span>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <a routerLink="" mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>Perfil</span>
+        </a>
+
+        <mat-divider></mat-divider>
+
+        <a (click)="handleLogout()" mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          <span>Sair</span>
+        </a>
+      </mat-menu>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

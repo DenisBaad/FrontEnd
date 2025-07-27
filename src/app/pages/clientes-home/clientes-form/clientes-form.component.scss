@@ -1,0 +1,22 @@
+mat-form-field{
+  padding: 2px;
+}
+
+h2{
+  text-align: center;
+  margin-top: 15px;
+}
+
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2{
+  :host-context(body.theme-dark) & {
+      color: white;
+ // ou outra cor escura desejada
+  }
+
+}

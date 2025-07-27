@@ -1,0 +1,19 @@
+img {
+  border-radius: 5px;
+}
+
+.rounded-image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.square-image {
+  border-radius: 5%;
+  object-fit: cover;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

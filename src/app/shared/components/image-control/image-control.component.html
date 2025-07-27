@@ -1,0 +1,10 @@
+<div [style.width]="imageWidth() + 'px'">
+  <img *ngIf="!hideInputField"  [src]="imageSource()" [height]="imageHeight()" [alt]="" [width]="imageWidth()" [ngClass]="{ 'rounded-image': isRounded, 'square-image': !isRounded }" (click)="inputField.click()"style="cursor: pointer;"/>
+
+  <input type="file" #inputField hidden (change)="fileSelected($event)" (click)="inputField.value=''"/>
+
+  <button *ngIf="showButton" mat-raised-button color="primary" aria-label="Adicionar nova imagem" matTooltip="Adicionar nova imagem"  (click)="inputField.click()">
+    <mat-icon>add</mat-icon>
+    Adicionar Foto
+  </button>
+</div>

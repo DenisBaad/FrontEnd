@@ -1,0 +1,45 @@
+<div class="grid">
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
+
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
+      <div fxLayout="row wrap" style="margin-bottom: 30px;">
+
+        <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            Email é obrigatório
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Por favor, insira um e-mail válido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg= "100" fxFlex.xl="100">
+          <mat-label>Senha</mat-label>
+          <input matInput [type]="hideSenha ? 'password' : 'text'" formControlName="senha" autocomplete="new-password" required>
+          <button mat-icon-button matSuffix (click)="toggleSenhaVisibility()" [attr.aria-label]="'Exibir ou ocultar senha'" [attr.aria-pressed]="!hideSenha" type="button">
+            <mat-icon>{{ hideSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('senha')?.hasError('required')">
+            Senha é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="lembrarEmail">Lembrar meu e-mail</mat-checkbox>
+
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" mat-button>Login</button>
+        </div>
+
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+</div>

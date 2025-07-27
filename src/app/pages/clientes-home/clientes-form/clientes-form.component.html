@@ -1,0 +1,78 @@
+<div mat-dialog-content>
+<h2>{{ item?.titulo === EDITAR_CLIENTE ? 'Formulário De Edição' : 'Formulário De Criação'}}</h2>
+<form [formGroup]="clienteForm">
+
+  <div fxLayout="row wrap">
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="codigo">
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option *ngFor="let option of clienteTipo" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+      <mat-label>CPF/CNPJ</mat-label>
+      <input matInput formControlName="cpfCnpj">
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let option of clienteStatus" [value]="option.value">
+          {{option.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome">
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      <mat-label>Identidade</mat-label>
+      <input matInput formControlName="identidade">
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      <mat-label>Orgão Expedidor</mat-label>
+      <input matInput formControlName="orgaoExpedidor">
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      <mat-label>Data de Nascimento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dataNascimento" placeholder="DD/MM/YYYY" (click)="picker.open()">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      <mat-label>Nome Fantasia</mat-label>
+      <input matInput formControlName="nomeFantasia">
+    </mat-form-field>
+  </div>
+
+  <div class="button">
+
+    <button mat-raised-button (click)="onClose()" type="button" matTooltip="Fechar" style="background-color: rgba(252, 6, 6, 0.781); color: aliceblue; border-radius: 5px; margin-right: 10px;">
+      Fechar
+    </button>
+
+    <button mat-raised-button matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}" style="background-color: rgba(248, 6, 127, 0.664); color: aliceblue; border-radius: 5px; margin-right: 10px;" (click)="buttonResetOrCharge()">
+      {{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}
+    </button>
+
+    <button mat-raised-button matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}" style="background-color: blue; color: azure; border-radius: 5px;" (click)="save()">
+      {{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}
+    </button>
+
+  </div>
+</form>
+</div>

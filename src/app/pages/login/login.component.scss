@@ -1,0 +1,83 @@
+mat-form-field{
+  padding: 2px;
+}
+
+mat-card-title{
+  text-align: center;
+  padding: 20px;
+}
+
+.grid {
+  background-image: url('../../../assets/login_background.jpg');
+  background-size: cover; /* Faz a imagem cobrir toda a área */
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Não repete a imagem */
+  height: 100vh; /* A altura será 100% da altura da tela */
+  width: 100%; /* A largura será 100% da tela */
+  display: flex; /* Para usar flexbox e centralizar o conteúdo */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  position: absolute; /* Para garantir que a div ocupe toda a tela */
+  top: 0;
+  left: 0;
+  padding: 20px; /* Adiciona algum espaçamento nas bordas */
+  box-sizing: border-box; /* Garante que o padding não afete o layout */
+}
+
+:host-context(body.theme-dark) mat-icon {
+  color: white;
+}
+
+:host-context(body.theme-light) mat-icon {
+  color: #333333;
+}
+
+.buttons {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  height: 100%;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  overflow: hidden;
+  padding-bottom: 5px;
+  padding: 10px;
+}
+
+@media screen and (min-width: 1400px) {
+  .grid{
+    background-position: top;
+  }
+}
+
+@media screen and (max-width: 1000px){
+  .grid{
+    height: 100vmax;
+  }
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0px;
+}
+
+.mat-form-field {
+  width: 100%;
+  min-width: 300px;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}

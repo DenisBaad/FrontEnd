@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Por favor ajuste sua foto</h1>
+
+<div mat-dialog-content>
+  <image-cropper [imageFile]="data.image" [resizeToHeight]="data.height" [resizeToWidth]="data.width" (imageCropped)="imageCropped($event)"></image-cropper>
+</div>
+
+<div mat-dialog-actions>
+  <div class="flex flex-row justify-content-center align-content-center align-items-center m-1">
+    <button mat-raised-button color="warn" style="margin-right: 5px;" aria-label="Adicionar novo produto" matTooltip="Cancelar" [mat-dialog-close]="false">
+      Cancelar
+    </button>
+
+    <button mat-raised-button color="primary"  matTooltip="Salvar" [mat-dialog-close]="result()">
+      Salvar
+    </button>
+  </div>
+</div>
