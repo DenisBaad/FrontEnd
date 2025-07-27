@@ -13,7 +13,8 @@ export const routes: Routes = [
   },
   {
     path: 'clientes',
-    loadChildren: () => import('./pages/clientes-home/clientes.routes').then(m => m.routes)
+    loadChildren: () => import('./pages/clientes-home/clientes.routes').then(m => m.routes),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
