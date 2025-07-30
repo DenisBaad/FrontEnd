@@ -64,6 +64,10 @@ table {
   color: #F44336;
 }
 
+.red-button {
+  color: #ff4c4c; /* Vermelho */
+}
+
 :host-context(body.theme-dark) .detalhes-button i {
   color: white;
 }
