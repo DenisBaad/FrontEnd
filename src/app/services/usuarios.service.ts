@@ -12,7 +12,7 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  postCliente(request: RequestCreateUsuario): Observable<RequestCreateUsuario> {
+  postUsuario(request: RequestCreateUsuario): Observable<RequestCreateUsuario> {
       return this.http.post<RequestCreateUsuario>(`${this.API_URL}/usuarios`, request);
     }
 }

@@ -150,5 +150,4 @@ export class ClientesHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
+import { Route, Router, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginService } from '../services/login.service';
 
@@ -10,12 +10,19 @@ export class AuthGuard {
 
   constructor(private loginService: LoginService, private router: Router) { }
 
-  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(!this.loginService.isLoggedIn()) {
+  private checkLogin(): boolean {
+    if (!this.loginService.isLoggedIn()) {
       this.router.navigate(['/login']);
       return false;
     }
-    this.loginService.isLoggedIn();
     return true;
+  }
+
+  canActivate(): boolean {
+    return this.checkLogin();
+  }
+
+  canLoad(route: Route, segments: UrlSegment[]): boolean {
+    return this.checkLogin();
   }
 }

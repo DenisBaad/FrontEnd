@@ -14,11 +14,7 @@ export const routes: Routes = [
   {
     path: 'clientes',
     loadChildren: () => import('./pages/clientes-home/clientes.routes').then(m => m.routes),
+    canLoad: [AuthGuard],
     canActivate: [AuthGuard]
   },
-  {
-    path: '**',
-    redirectTo: '/clientes',
-    pathMatch: 'full'
-  }
 ];

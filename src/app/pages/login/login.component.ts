@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         senha: this.loginForm.get('senha')?.value
       };
 
-      this.usuariosService.postCliente(req)
+      this.usuariosService.postUsuario(req)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
