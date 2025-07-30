@@ -53,6 +53,20 @@ mat-card-title{
   padding: 10px;
 }
 
+.buttons-stack {
+  display: flex;
+  flex-direction: column; /* força coluna */
+  align-items: center;    /* centraliza */
+  gap: 8px;               /* espaçamento entre os botões */
+  width: 100%;
+}
+
+/* Opcional: manter largura visual parecida */
+.buttons-stack button {
+  max-width: 320px;
+  width: 100%;
+}
+
 @media screen and (min-width: 1400px) {
   .grid{
     background-position: top;
