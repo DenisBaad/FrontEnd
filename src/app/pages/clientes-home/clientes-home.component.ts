@@ -157,7 +157,6 @@ export class ClientesHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ativarInativarCliente(id: string) {
-    debugger
     this.clientesService.ativarInativarCliente(id)
     .pipe(takeUntil(this.destroy$))
       .subscribe({

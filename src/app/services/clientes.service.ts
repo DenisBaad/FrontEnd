@@ -39,6 +39,6 @@ export class ClientesService {
   }
 
   delete(id: string): Observable<any> {
-  return this.http.delete<any>(`${this.API_URL}/clientes/${id}`, this.httpOptions);
+  return this.http.post<any>(`${this.API_URL}/clientes/${id}`,{}, this.httpOptions);
   }
 }
