@@ -75,6 +75,10 @@
           <i class="fas fa-pen-to-square fa-sm"></i>
         </button>
 
+        <button mat-icon-button matTooltip="Deletar" (click)="handleClienteEvent(DELETAR_CLIENTE, element)" class="action-button delete red-button" >
+          <i class="fas fa-trash fa-sm"></i>
+        </button>
+
         <button mat-icon-button class="action-button" matTooltip="{{element.status == 1 ? 'Inativar' : 'Ativar'}}" (click)="ativarInativarCliente(element.id)" [ngClass]="element.status === EnumStatusCliente.Ativo ? 'active-button' : 'inactive-button'">
               <i class="fas" [ngClass]="element.status === EnumStatusCliente.Ativo ? 'fa-check-circle' : 'fa-times-circle'"></i>
         </button>

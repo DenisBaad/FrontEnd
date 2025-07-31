@@ -37,4 +37,8 @@ export class ClientesService {
   ativarInativarCliente(id: string): Observable<any> {
   return this.http.patch<any>(`${this.API_URL}/clientes/${id}`, {}, this.httpOptions);
   }
+
+  delete(id: string): Observable<any> {
+  return this.http.delete<any>(`${this.API_URL}/clientes/${id}`, this.httpOptions);
+  }
 }
