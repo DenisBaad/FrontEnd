@@ -20,21 +20,31 @@
   margin: 0; /* Ajusta a margem do contêiner pai se necessário */
 }
 
-.table-container {
-  overflow-x: auto;
-  border-radius: 5px;
+:host-context(body.theme-dark) .table-container th {
+  background: linear-gradient(to top, rgba(34, 139, 34, 0.7), rgba(144, 238, 144, 0.5)); /* Verde vibrante */
+  white-space: nowrap;
+  text-align: center;
+  padding: 8px;
 }
 
-.table-container th {
-  background: linear-gradient(to top, rgba(175, 221, 243, 0.445), rgba(0, 248, 186, 0.26));
-  white-space: nowrap; /* Impede a quebra de linha nos cabeçalhos */
-  text-align: center; /* Alinha o texto à esquerda */
-  padding: 8px; /* Adiciona preenchimento nos cabeçalhos */
+:host-context(body.theme-light) .table-container th {
+  background: linear-gradient(to top, rgba(55, 71, 79, 0.6), rgba(38, 50, 56, 0.4)); /* Seu background padrão */
+  white-space: nowrap;
+  text-align: center;
+  padding: 8px;
 }
 
 .table-container td {
   text-align: center;
   white-space: nowrap;
+  padding: 5px 24px; /* aumenta o espaçamento interno */
+  font-size: 1.1rem;  /* fonte maior */
+  height: 60px;       /* linha mais alta */
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 5px;
 }
 
 table {
@@ -94,7 +104,9 @@ table {
   width: 100%; /* Ocupa toda a largura disponível */
   max-width: 600px; /* Define a largura máxima */
   white-space: nowrap; /* Impede quebra de linha */
+
 }
+
 
 
 

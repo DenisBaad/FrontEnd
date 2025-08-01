@@ -76,7 +76,11 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const target = event.target as HTMLInputElement;
     const value = target.value.trim().toLowerCase();
 
-    this.dataSource.data = this.faturaData?.filter(fatura => fatura.codBoleto.trim().toLowerCase().includes(value)) || []
+    this.dataSource.data = this.faturaData?.filter(fatura => {
+      const cliente = this.clientesList.find(c => c.id === fatura.clienteId);
+      const nomeCliente = cliente ? cliente.nome.toLowerCase() : '';
+      return nomeCliente.includes(value);
+    }) || [];
   }
 
   public getPlanoDescricao(planoId: string): string {

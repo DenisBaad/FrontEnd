@@ -3,13 +3,13 @@
 @include mat.elevation-classes();
 @include mat.app-background();
 
-$my-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500);
-$my-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
-$my-warn: mat.m2-define-palette(mat.$m2-red-palette);
+$my-primary: mat.m2-define-palette(mat.$m2-grey-palette, 900); // Cinza escuro
+$my-accent: mat.m2-define-palette(mat.$m2-pink-palette, 600); // Azul acinzentado
+$my-warn: mat.m2-define-palette(mat.$m2-red-palette, 600);    // Vermelho forte
 
-$my-primary-dark: mat.m2-define-palette(mat.$m2-teal-palette, 300);
-$my-accent-dark: mat.m2-define-palette(mat.$m2-purple-palette);
-$my-warn-dark: mat.m2-define-palette(mat.$m2-red-palette);
+$my-primary-dark: mat.m2-define-palette(mat.$m2-purple-palette, 800); // Roxo vibrante (forte e moderno)
+$my-accent-dark: mat.m2-define-palette(mat.$m2-green-palette, A400); // Amarelo vibrante
+$my-warn-dark: mat.m2-define-palette(mat.$m2-red-palette, 800);
 
 $my-theme: mat.m2-define-light-theme((
   color: (

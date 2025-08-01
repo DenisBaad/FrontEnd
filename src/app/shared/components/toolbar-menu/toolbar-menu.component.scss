@@ -23,9 +23,13 @@
   color: white;
   z-index: 1000;
   height: 64px;
-  background-color: #0b064e;
+background: linear-gradient(135deg, #383737, #000000);
   border-bottom: 1px solid #707070;
   text-shadow: 2px 1px 3px #323232 ;
+
+  :host-context(body.theme-dark) .toolbar-menu {
+background: linear-gradient(135deg, #686565, #000000);
+}
 }
 
 .content-center {

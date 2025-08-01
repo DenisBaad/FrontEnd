@@ -43,7 +43,7 @@ mat-toolbar-row {
 }
 
 .sidenav {
-  width: 250px;
+  width: 300px;
   margin-top: 64px;
 
   .mat-icon{
@@ -93,8 +93,8 @@ mat-toolbar-row {
   mat-nav-list{
     padding: 8px;
     a{
-      border-radius: 10px;
-      margin-bottom: 4px;
+      border-radius: 20px;
+      margin-bottom: 10px;
       padding-top: 1px;
       font-size: 0.9rem;
       display: flex;
@@ -120,9 +120,17 @@ mat-toolbar-row {
 
     }
 
-    a:hover, .active {
-      background: linear-gradient(to top, rgba(175, 221, 243, 0.445), rgba(0, 248, 186, 0.26));
-    }
+    /* Para modo dark */
+:host-context(body.theme-dark) a:hover,
+:host-context(body.theme-dark) .active {
+background: linear-gradient(to top, rgba(58, 211, 104, 0.897), rgba(44, 117, 44, 0.5)); /* Verde vibrante */
+}
+
+/* Para modo light */
+:host-context(body.theme-light) a:hover,
+:host-context(body.theme-light) .active {
+  background: linear-gradient(to top, rgba(55, 71, 79, 0.6), rgba(38, 50, 56, 0.4)); /* Seu background padrão */
+}
   }
 
   .container {
