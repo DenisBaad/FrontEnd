@@ -27,4 +27,9 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/faturas-home/faturas.routes').then(m => m.routes),
     canActivate: [AuthGuard]
   },
+  {
+    path: 'relatorios',
+    loadChildren: () => import('./pages/relatorio-faturas/relatorio.routes').then(m => m.routes),
+    canActivate: [AuthGuard]
+  }
 ];

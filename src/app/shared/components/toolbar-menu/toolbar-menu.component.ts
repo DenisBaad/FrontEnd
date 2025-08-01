@@ -99,8 +99,8 @@ export class ToolbarMenuComponent implements OnInit, OnDestroy {
   }
 
   deleteCookies() : void {
-    this.cookie.delete('USUARIO_NOME');
-    this.cookie.delete('USUARIO_INFORMACOES');
+    this.cookie.delete('USUARIO_NOME', '/');
+    this.cookie.delete('USUARIO_INFORMACOES', '/');
   }
 
   ngOnDestroy(): void {

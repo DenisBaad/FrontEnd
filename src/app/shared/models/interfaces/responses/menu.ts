@@ -15,5 +15,10 @@ export const menuItems : MenuItem[] = [
     link: '/faturas',
     icon: 'fa-file-invoice fa-lg',
     label: 'Faturas'
+  },
+  {
+    link: '/relatorios',
+    icon: 'fa-clipboard-check fa-lg',
+    label: 'Relatório de faturas'
   }
 ]
