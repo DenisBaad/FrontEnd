@@ -68,7 +68,10 @@ export class ClientesHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       next: (response) => {
         this.dataSource.data = response;
         this.clienteData = response;
-      }
+      },
+      error: (err) => {
+          console.error('Erro ao buscar clientes', err);
+        }
     })
   }
 

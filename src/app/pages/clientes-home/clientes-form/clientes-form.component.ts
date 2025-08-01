@@ -2,7 +2,6 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ClientesService } from '../../../services/clientes.service';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponseCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { EnumTipoCliente } from '../../../shared/models/enums/enumTipoCliente';
@@ -42,8 +41,6 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   clienteForm!: FormGroup;
   clienteData: ResponseCliente | undefined;
-  EDITAR_CLIENTE = 'Alterar cliente';
-  private initialClienteData: any;
 
   clienteTipo = [
     { label: 'Fisica', value: EnumTipoCliente.Fisica },
@@ -55,7 +52,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
     { label: 'Inativo', value: EnumStatusCliente.Inativo},
   ]
 
-  constructor(private fb: FormBuilder, private clientesService: ClientesService, private router: Router, private snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public item: any, public dialogRef: MatDialogRef<ClientesFormComponent>){}
+  constructor(private fb: FormBuilder, private clientesService: ClientesService, private snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public item: any, public dialogRef: MatDialogRef<ClientesFormComponent>){}
 
   ngOnInit(): void {
     this.formCliente();
@@ -73,8 +70,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
       dataNascimento: [''],
       nomeFantasia: [null],
     })
-    if (this.item.titulo === this.EDITAR_CLIENTE) {
-      this.initialClienteData = this.item.cliente;
+    if (this.item.cliente) {
       this.clienteForm.patchValue({
         codigo: this.item.cliente.codigo,
         tipo: this.item.cliente.tipo,
@@ -90,17 +86,17 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
   }
 
   buttonResetOrCharge(){
-    if (this.item.titulo === this.EDITAR_CLIENTE) {
+    if (this.item.cliente) {
       this.clienteForm.patchValue({
-        codigo: this.initialClienteData.codigo,
-        tipo: this.initialClienteData.tipo,
-        cpfCnpj: this.initialClienteData.cpfCnpj,
-        status: this.initialClienteData.status,
-        nome: this.initialClienteData.nome,
-        identidade: this.initialClienteData.identidade,
-        orgaoExpedidor: this.initialClienteData.orgaoExpedidor,
-        dataNascimento: this.initialClienteData.dataNascimento,
-        nomeFantasia: this.initialClienteData.nomeFantasia
+        codigo: this.item.cliente.codigo,
+        tipo: this.item.cliente.tipo,
+        cpfCnpj: this.item.cliente.cpfCnpj,
+        status: this.item.cliente.status,
+        nome: this.item.cliente.nome,
+        identidade: this.item.cliente.identidade,
+        orgaoExpedidor: this.item.cliente.orgaoExpedidor,
+        dataNascimento: this.item.cliente.dataNascimento,
+        nomeFantasia: this.item.cliente.nomeFantasia
       })
     } else {
       this.clienteForm.reset();

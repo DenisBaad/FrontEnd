@@ -10,7 +10,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { GetPlanoResponse } from '../../shared/models/interfaces/responses/planos/GetPlanoResponse';
 import { PlanoService } from '../../services/plano.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -69,8 +69,10 @@ export class PlanosHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     .subscribe({
       next: (response) => {
         this.dataSource.data = response;
-        this.planoData = response;
-      }
+      },
+      error: (err) => {
+          console.error('Erro ao buscar planos', err);
+        }
     })
   }
 

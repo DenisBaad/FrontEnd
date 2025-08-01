@@ -46,11 +46,11 @@
         </button>
 
         <button mat-raised-button color="accent" (click)="onClearForm()" type="button" style="margin-right: 10px;">
-          {{ item.titulo === EDITAR_PLANO ? 'Carregar' : 'Limpar' }}
+          {{ item.plano ? 'Carregar' : 'Limpar' }}
         </button>
 
         <button mat-raised-button color="primary" type="submit">
-          {{ item.titulo === EDITAR_PLANO ? 'Alterar' : 'Adicionar' }}
+          {{ item.plano ? 'Alterar' : 'Adicionar' }}
         </button>
     </div>
 

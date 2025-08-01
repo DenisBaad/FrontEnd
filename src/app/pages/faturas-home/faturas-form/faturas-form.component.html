@@ -35,69 +35,61 @@
         <mat-error *ngIf="form.get('inicioVigencia')?.errors?.['required']">
           Este campo é obrigatória.
         </mat-error>
-    </mat-form-field>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="35">
-        <mat-label>Fim Vigência</mat-label>
-        <input matInput [matDatepicker]="pickerVencimento" [formControlName]="'fimVigencia'" #controle>
-        <mat-datepicker-toggle matSuffix [for]="pickerVencimento"></mat-datepicker-toggle>
-        <mat-datepicker #pickerVencimento></mat-datepicker>
-        <mat-error *ngIf="form.get('fimVigencia')?.errors?.['required']">
-          Data de vencimento é obrigatória.
+      <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="35">
+          <mat-label>Fim Vigência</mat-label>
+          <input matInput [matDatepicker]="pickerVencimento" [formControlName]="'fimVigencia'" #controle>
+          <mat-datepicker-toggle matSuffix [for]="pickerVencimento"></mat-datepicker-toggle>
+          <mat-datepicker #pickerVencimento></mat-datepicker>
+          <mat-error *ngIf="form.get('fimVigencia')?.errors?.['required']">
+            Data de vencimento é obrigatória.
+          </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="34">
+        <mat-label>Data De Vencimento </mat-label>
+        <input matInput [matDatepicker]="pickerFim" formControlName="dataVencimento" #controle>
+        <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFim></mat-datepicker>
+        <mat-error *ngIf="form.get('dataVencimento')?.hasError('required')">
+          Este campo é obrigatório.
         </mat-error>
-    </mat-form-field>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="34">
-      <mat-label>Data De Vencimento </mat-label>
-      <input matInput [matDatepicker]="pickerFim" formControlName="dataVencimento" #controle>
-      <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
-      <mat-datepicker #pickerFim></mat-datepicker>
-      <mat-error *ngIf="form.get('dataVencimento')?.hasError('required')">
-        Este campo é obrigatório.
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33">
+        <mat-label>Plano</mat-label>
+        <mat-select [formControlName]="'planoId'">
+          <mat-option *ngFor="let plano of planos" [value]="plano.id">
+            {{ plano.descricao }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('planoId')?.hasError('required')">
+          Este campo é obrigatório.
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33">
-      <mat-label>Plano</mat-label>
-      <div style="flex: 1; display: flex; align-items: center;">
-      <input type="text" matInput formControlName="planoId" [matAutocomplete]="planoAuto" (focus)="loadPlanoOptions()" (blur)="onBlur('planoId')" style="flex: 1;"/>
-      <mat-progress-spinner *ngIf="isPlanoLoading" mode="indeterminate" diameter="20" style="margin-left: 8px; vertical-align: middle;"></mat-progress-spinner>
-      </div>
-      <mat-autocomplete #planoAuto="matAutocomplete" [displayWith]="displayPlano" (optionSelected)="onOptionSelected($event, 'planoId')">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{ option.descricao }}
-        </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="form.get('planoId')?.hasError('required')">
-        Este campo é obrigatório.
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33">
-      <mat-label>Cliente</mat-label>
-      <div style="flex: 1; display: flex; align-items: center;">
-      <input type="text" matInput formControlName="clienteId" [matAutocomplete]="empresaAuto" (focus)="loadClienteOptions()" (blur)="onBlurCliente('clienteId')" style="flex: 1;"/>
-      <mat-progress-spinner *ngIf="isClienteLoading" mode="indeterminate" diameter="20" style="margin-left: 8px; vertical-align: middle;"></mat-progress-spinner>
-      </div>
-      <mat-autocomplete #empresaAuto="matAutocomplete" [displayWith]="displayCliente" (optionSelected)="onOptionSelectedEmpresa($event, 'clienteId')">
-        <mat-option *ngFor="let option of filteredOptionsCliente | async" [value]="option">
-          {{ option.nome }}
-        </mat-option>
-      </mat-autocomplete>
-      <mat-error *ngIf="form.get('clienteId')?.hasError('required')">
-        Este campo é obrigatório.
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33">
+        <mat-label>Cliente</mat-label>
+        <mat-select [formControlName]="'clienteId'">
+          <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+            {{ cliente.nome }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('clienteId')?.hasError('required')">
+          Este campo é obrigatório.
+        </mat-error>
+      </mat-form-field>
 
   </div>
 
     <div class="button">
         <button mat-raised-button color="warn" (click)="onClose()" type="button" style=" margin-right: 10px;">Fechar</button>
         <button mat-raised-button color="accent" (click)="onClearForm()" type="button" style=" margin-right: 10px;">
-          {{ item.titulo === EDITAR_FATURA ? 'Carregar' : 'Limpar' }}
+          {{ item.fatura ? 'Carregar' : 'Limpar' }}
         </button>
         <button mat-raised-button color="primary" type="submit">
-          {{ item.titulo === EDITAR_FATURA ? 'Alterar' : 'Adicionar' }}
+          {{ item.fatura ? 'Alterar' : 'Adicionar' }}
         </button>
       </div>
     <ng-content></ng-content>

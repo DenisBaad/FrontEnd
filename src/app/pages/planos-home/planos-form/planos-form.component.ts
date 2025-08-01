@@ -29,8 +29,6 @@ import { FormatarMoedaDirective } from '../../../shared/directives/formatarMoeda
 export class PlanosFormComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject<void>();
   form!: FormGroup;
-  EDITAR_PLANO = 'Alterar plano';
-  private initialPlanoData: any;
   isLoading = true;
 
   constructor(@Inject(MAT_DIALOG_DATA) public item: any, public dialogRef: MatDialogRef<PlanosFormComponent>, private planoService: PlanoService, private fb: FormBuilder, private snackBar: MatSnackBar) {}
@@ -42,10 +40,9 @@ export class PlanosFormComponent implements OnInit, OnDestroy {
       quantidadeUsuarios: [0, Validators.maxLength(40)],
       vigenciaMeses: [0, Validators.required],
     });
-    if (this.item.titulo === this.EDITAR_PLANO) {
+    if (this.item.plano) {
       this.isLoading = true;
       setTimeout(() => {
-      this.initialPlanoData = this.item.plano;
       this.form.patchValue({
         descricao: this.item.plano.descricao,
         valorPlano: this.formatarValorParaExibicao(this.item.plano.valorPlano),
@@ -60,20 +57,15 @@ export class PlanosFormComponent implements OnInit, OnDestroy {
 }
 
 onClearForm(): void {
-  if (this.item.titulo === this.EDITAR_PLANO) {
+  if (this.item.plano) {
     this.form.patchValue({
-      descricao: this.initialPlanoData.descricao,
-      valorPlano: this.formatarValorParaExibicao(this.initialPlanoData.valorPlano),
-      quantidadeUsuarios: this.initialPlanoData.quantidadeUsuarios,
-      vigenciaMeses: this.initialPlanoData.vigenciaMeses,
+      descricao: this.item.plano.descricao,
+      valorPlano: this.formatarValorParaExibicao(this.item.plano.valorPlano),
+      quantidadeUsuarios: this.item.plano.quantidadeUsuarios,
+      vigenciaMeses: this.item.plano.vigenciaMeses,
     });
   } else {
-    this.form.patchValue({
-      descricao: '',
-      valorPlano: '',
-      quantidadeUsuarios: '',
-      vigenciaMeses: '',
-    });
+    this.form.reset();
   }
 }
 
@@ -81,7 +73,8 @@ onSubmitForm(): void {
   if (this.form.valid) {
     const formValue = { ...this.form.value };
     formValue.valorPlano = this.ajustaStringMonetaria(formValue.valorPlano);
-    if (this.item.titulo === this.EDITAR_PLANO) {
+
+    if (this.item.plano) {
       this.planoService.Put(formValue, this.item.plano.id)
         .pipe(take(1))
         .subscribe({

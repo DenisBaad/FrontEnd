@@ -11,7 +11,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormatoMoedaPipe } from '../../shared/pipes/formato-moeda.pipe';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { GetFaturaResponse } from '../../shared/models/interfaces/responses/faturas/GetFaturaResponse';
 import { GetPlanoResponse } from '../../shared/models/interfaces/responses/planos/GetPlanoResponse';
 import { ResponseCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
@@ -48,7 +48,6 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource<GetFaturaResponse>();
   displayedColumns: string[] = ['status', 'inicioVigencia', 'fimVigencia', 'valorTotal', 'planoId', 'clienteId', 'acoes'];
   public faturaData!: GetFaturaResponse[] | undefined;
-  public planoData!: GetPlanoResponse[] | undefined;
   public planosList: Array<GetPlanoResponse>= [];
   public clientesList: Array<ResponseCliente>= [];
   ADICIONAR_FATURA = 'Adicionar nova fatura';
@@ -61,6 +60,7 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   constructor(private faturaService: FaturaService, private planoService: PlanoService, private clienteService:ClientesService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
+
   ngOnInit(): void {
     this.getPlanos();
     this.getClientes();
@@ -78,22 +78,6 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.data = this.faturaData?.filter(fatura => fatura.codBoleto.trim().toLowerCase().includes(value)) || []
   }
 
-  applyFilter(searchValue: string): void {
-    this.dataSource.filterPredicate = (data: GetFaturaResponse, filter: string) => {
-      const descricaoPlano = this.getPlanoDescricao(data.planoId).toLowerCase();
-      return descricaoPlano.includes(filter.toLowerCase());
-    };
-    this.dataSource.filter = searchValue.trim().toLowerCase();
-  }
-
-  applyFilterCliente(searchValue: string): void {
-    this.dataSource.filterPredicate = (data: GetFaturaResponse, filter: string) => {
-      const nomeCliente= this.getPlanoDescricao(data.clienteId).toLowerCase();
-      return nomeCliente.includes(filter.toLowerCase());
-    };
-    this.dataSource.filter = searchValue.trim().toLowerCase();
-  }
-
   public getPlanoDescricao(planoId: string): string {
     const plano = this.planosList.find(cat => cat.id === planoId);
     return plano ? plano.descricao : 'Plano não encontrada';
@@ -104,23 +88,29 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public getPlanos(): void {
-  this.planoService.Get()
-    .pipe(
-      tap((response: GetPlanoResponse[]) => {
-        this.planosList = response;
+    this.planoService.Get()
+    .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+          this.planosList = response;
+        },
+        error: (err) => {
+          console.error('Erro ao buscar planos', err);
+        }
       })
-    )
-    .subscribe();
-}
+  }
 
   public getClientes(): void {
     this.clienteService.getClientes()
-      .pipe(
-        tap((response: ResponseCliente[]) => {
+      .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
           this.clientesList = response;
-        })
-      )
-      .subscribe();
+        },
+        error: (err) => {
+          console.error('Erro ao buscar clientes', err);
+        }
+      })
   }
 
   getFaturas(idPlano: string = '', clienteId: string = ''): void {
@@ -129,7 +119,9 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe({
         next: (response) => {
           this.dataSource.data = response;
-          this.faturaData = response;
+        },
+        error: (err) => {
+          console.error('Erro ao buscar faturas', err);
         }
       });
   }

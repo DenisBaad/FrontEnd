@@ -1,5 +1,5 @@
 <div mat-dialog-content>
-<h2>{{ item?.titulo === EDITAR_CLIENTE ? 'Formulário De Edição' : 'Formulário De Criação'}}</h2>
+<h2>{{ item.cliente ? 'Formulário De Edição' : 'Formulário De Criação'}}</h2>
 <form [formGroup]="clienteForm">
 
   <div fxLayout="row wrap">
@@ -65,12 +65,12 @@
       Fechar
     </button>
 
-    <button mat-raised-button color="accent" matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}" style="margin-right: 10px;" (click)="buttonResetOrCharge()">
-      {{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}
+    <button mat-raised-button color="accent" matTooltip="{{ item?.cliente ? 'Carregar' : 'Limpar' }}" style="margin-right: 10px;" (click)="buttonResetOrCharge()">
+      {{ item.cliente ? 'Carregar' : 'Limpar' }}
     </button>
 
-    <button mat-raised-button color="primary" matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}" (click)="save()">
-      {{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}
+    <button mat-raised-button color="primary" matTooltip="{{ item?.cliente ? 'Salvar' : 'Cadastrar'}}" (click)="save()">
+      {{ item?.cliente ? 'Salvar' : 'Cadastrar'}}
     </button>
 
   </div>
