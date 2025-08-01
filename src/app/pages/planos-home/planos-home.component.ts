@@ -43,6 +43,7 @@ export class PlanosHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource<GetPlanoResponse>();
   displayedColumns: string[] = ['descricao', 'valorPlano', 'quantidadeUsuarios', 'vigenciaMeses', 'acoes'];
   public planoData!: GetPlanoResponse[] | undefined;
+  public isLoading = true;
   ADICIONAR_PLANO = 'Adicionar novo plano';
   EDITAR_PLANO = 'Alterar plano';
 
@@ -64,14 +65,19 @@ export class PlanosHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getPlanos() {
+    this.isLoading = true;
+
     this.planosService.Get()
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
         this.dataSource.data = response;
+        this.planoData = response;
+        this.isLoading = false;
       },
       error: (err) => {
           console.error('Erro ao buscar planos', err);
+          this.isLoading = false;
         }
     })
   }

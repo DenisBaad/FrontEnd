@@ -4,12 +4,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
+import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormatarMoedaDirective } from '../../../shared/directives/formatarMoedaDirective';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Subject, take, takeUntil } from 'rxjs';
 import { GetPlanoResponse } from '../../../shared/models/interfaces/responses/planos/GetPlanoResponse';
 import { ResponseCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
@@ -18,6 +17,7 @@ import { FaturaService } from '../../../services/fatura.service';
 import { ClientesService } from '../../../services/clientes.service';
 import { PlanoService } from '../../../services/plano.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-faturas-form',
@@ -32,7 +32,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     FormatarMoedaDirective,
     MatSelectModule,
     MatDatepickerModule,
-    MatAutocompleteModule,
+    MatFormField,
+    MatIconModule
   ],
   templateUrl: './faturas-form.component.html',
   styleUrl: './faturas-form.component.scss'

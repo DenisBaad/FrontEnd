@@ -48,6 +48,7 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource<GetFaturaResponse>();
   displayedColumns: string[] = ['status', 'inicioVigencia', 'fimVigencia', 'valorTotal', 'planoId', 'clienteId', 'acoes'];
   public faturaData!: GetFaturaResponse[] | undefined;
+  public isLoading = true;
   public planosList: Array<GetPlanoResponse>= [];
   public clientesList: Array<ResponseCliente>= [];
   ADICIONAR_FATURA = 'Adicionar nova fatura';
@@ -114,14 +115,19 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getFaturas(idPlano: string = '', clienteId: string = ''): void {
+    this.isLoading = true;
+
     this.faturaService.Get(idPlano, clienteId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           this.dataSource.data = response;
+          this.faturaData = response;
+          this.isLoading = false;
         },
         error: (err) => {
           console.error('Erro ao buscar faturas', err);
+          this.isLoading = false;
         }
       });
   }

@@ -6,7 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponseCliente } from '../../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { EnumTipoCliente } from '../../../shared/models/enums/enumTipoCliente';
 import { EnumStatusCliente } from '../../../shared/models/enums/enumStatusCliente';
-import { RequestCreateCliente } from '../../../shared/models/interfaces/requests/clientes/RequestCreateCliente';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,6 +40,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   clienteForm!: FormGroup;
   clienteData: ResponseCliente | undefined;
+  isLoading = true;
 
   clienteTipo = [
     { label: 'Fisica', value: EnumTipoCliente.Fisica },
@@ -71,6 +71,8 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
       nomeFantasia: [null],
     })
     if (this.item.cliente) {
+      this.isLoading = true;
+      setTimeout(() => {
       this.clienteForm.patchValue({
         codigo: this.item.cliente.codigo,
         tipo: this.item.cliente.tipo,
@@ -81,8 +83,12 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
         orgaoExpedidor: this.item.cliente.orgaoExpedidor,
         dataNascimento: this.item.cliente.dataNascimento,
         nomeFantasia: this.item.cliente.nomeFantasia
-      })
-    }
+      });
+      this.isLoading = false;
+    }, 500);
+   } else {
+    this.isLoading = false;
+   }
   }
 
   buttonResetOrCharge(){
@@ -105,21 +111,10 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
 
   save() {
     if (this.clienteForm.valid) {
-      if (this.item.cliente?.id) {
-        const request: any = {
-          id: this.item.cliente.id,
-          codigo: this.clienteForm.value.codigo as number,
-          tipo: this.clienteForm.value.tipo as EnumTipoCliente,
-          cpfCnpj: this.clienteForm.value.cpfCnpj as string,
-          status: this.clienteForm.value.status as EnumStatusCliente,
-          nome: this.clienteForm.value.nome as string,
-          identidade: this.clienteForm.value.identidade as string,
-          orgaoExpedidor: this.clienteForm.value.orgaoExpedidor as string,
-          dataNascimento: this.clienteForm.value.dataNascimento as Date,
-          nomeFantasia: this.clienteForm.value.nomeFantasia as string
-        };
+      const formValue = { ...this.clienteForm.value };
 
-        this.clientesService.putCliente(this.item.cliente.id, request)
+      if (this.item.cliente){
+        this.clientesService.putCliente(this.item.cliente.id, formValue)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {
@@ -130,21 +125,8 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
               this.snackBar.open('Erro ao editar cliente!', 'Fechar', { duration: 2000 });
             }
           });
-
       } else {
-        const request: RequestCreateCliente = {
-          codigo: this.clienteForm.value.codigo as number,
-          tipo: this.clienteForm.value.tipo as EnumTipoCliente,
-          cpfCnpj: this.clienteForm.value.cpfCnpj as string,
-          status: this.clienteForm.value.status as EnumStatusCliente,
-          nome: this.clienteForm.value.nome as string,
-          identidade: this.clienteForm.value.identidade as string,
-          orgaoExpedidor: this.clienteForm.value.orgaoExpedidor as string,
-          dataNascimento: this.clienteForm.value.dataNascimento as Date,
-          nomeFantasia: this.clienteForm.value.nomeFantasia as string,
-        };
-
-        this.clientesService.postCliente(request)
+        this.clientesService.postCliente(formValue)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {

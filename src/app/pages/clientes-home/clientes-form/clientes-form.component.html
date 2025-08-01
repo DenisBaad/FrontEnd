@@ -1,5 +1,8 @@
 <div mat-dialog-content>
 <h2>{{ item.cliente ? 'Formulário De Edição' : 'Formulário De Criação'}}</h2>
+  <div *ngIf="isLoading" class="spinner-overlay">
+    <mat-spinner class="loading-spinner"></mat-spinner>
+  </div>
 <form [formGroup]="clienteForm">
 
   <div fxLayout="row wrap">

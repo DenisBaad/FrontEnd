@@ -24,14 +24,14 @@
 
         <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="30" fxFlex.xl="30">
           <mat-label>Início Vigência</mat-label>
-          <input matInput [matDatepicker]="pickerAbertura" formControlName="dataAbertura">
+          <input matInput [matDatepicker]="pickerAbertura" formControlName="dataAbertura" placeholder="DD/MM/YYYY" (click)="pickerAbertura.open()">
           <mat-datepicker-toggle matSuffix [for]="pickerAbertura"></mat-datepicker-toggle>
           <mat-datepicker #pickerAbertura></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="30" fxFlex.xl="30">
           <mat-label>Fim Vigência</mat-label>
-          <input matInput [matDatepicker]="pickerFechamento" formControlName="dataFechamento">
+          <input matInput [matDatepicker]="pickerFechamento" formControlName="dataFechamento" placeholder="DD/MM/YYYY" (click)="pickerFechamento.open()">
           <mat-datepicker-toggle matSuffix [for]="pickerFechamento"></mat-datepicker-toggle>
           <mat-datepicker #pickerFechamento></mat-datepicker>
         </mat-form-field>

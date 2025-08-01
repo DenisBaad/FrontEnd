@@ -46,6 +46,7 @@ export class ClientesHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = ['codigo', 'tipo', 'cpfCnpj', 'status', 'nome', 'identidade', 'orgaoExpedidor', 'dataNascimento', 'nomeFantasia', 'acoes'];
   dataSource = new MatTableDataSource<ResponseCliente>();
   clienteData: ResponseCliente[] | undefined;
+  public isLoading = true;
   ADICIONAR_CLIENTE = 'Adicionar novo cliente';
   EDITAR_CLIENTE = 'Alterar cliente';
   DELETAR_CLIENTE = 'Deletar cliente';
@@ -62,15 +63,19 @@ export class ClientesHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getClientes() {
+    this.isLoading = true;
+
     this.clientesService.getClientes()
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
         this.dataSource.data = response;
         this.clienteData = response;
+        this.isLoading = false;
       },
       error: (err) => {
           console.error('Erro ao buscar clientes', err);
+          this.isLoading = false;
         }
     })
   }

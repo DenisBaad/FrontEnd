@@ -29,7 +29,7 @@
 
       <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="35">
         <mat-label>Início Vigência</mat-label>
-        <input matInput [matDatepicker]="picker" [formControlName]="'inicioVigencia'" #controle>
+        <input matInput [matDatepicker]="picker" formControlName="inicioVigencia" placeholder="DD/MM/YYYY" (click)="picker.open()">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error *ngIf="form.get('inicioVigencia')?.errors?.['required']">
@@ -39,7 +39,7 @@
 
       <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="35">
           <mat-label>Fim Vigência</mat-label>
-          <input matInput [matDatepicker]="pickerVencimento" [formControlName]="'fimVigencia'" #controle>
+          <input matInput [matDatepicker]="pickerVencimento" formControlName="fimVigencia" placeholder="DD/MM/YYYY" (click)="pickerVencimento.open()">
           <mat-datepicker-toggle matSuffix [for]="pickerVencimento"></mat-datepicker-toggle>
           <mat-datepicker #pickerVencimento></mat-datepicker>
           <mat-error *ngIf="form.get('fimVigencia')?.errors?.['required']">
@@ -49,7 +49,7 @@
 
       <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm ="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="34">
         <mat-label>Data De Vencimento </mat-label>
-        <input matInput [matDatepicker]="pickerFim" formControlName="dataVencimento" #controle>
+        <input matInput [matDatepicker]="pickerFim" formControlName="dataVencimento" placeholder="DD/MM/YYYY" (click)="pickerFim.open()">
         <mat-datepicker-toggle matSuffix [for]="pickerFim"></mat-datepicker-toggle>
         <mat-datepicker #pickerFim></mat-datepicker>
         <mat-error *ngIf="form.get('dataVencimento')?.hasError('required')">
