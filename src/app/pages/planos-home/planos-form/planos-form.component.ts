@@ -36,9 +36,9 @@ export class PlanosFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.fb.group({
       descricao: ['', Validators.required],
-      valorPlano: [0, [Validators.required, Validators.maxLength(40)]],
-      quantidadeUsuarios: [0, Validators.maxLength(40)],
-      vigenciaMeses: [0, Validators.required],
+      valorPlano: [null, [Validators.required, Validators.maxLength(40)]],
+      quantidadeUsuarios: [null, [Validators.maxLength(40), Validators.required]],
+      vigenciaMeses: [null, Validators.required],
     });
     if (this.item.plano) {
       this.isLoading = true;
@@ -51,70 +51,86 @@ export class PlanosFormComponent implements OnInit, OnDestroy {
       });
       this.isLoading = false;
     }, 500);
-  } else {
-    this.isLoading = false;
-  }
-}
-
-onClearForm(): void {
-  if (this.item.plano) {
-    this.form.patchValue({
-      descricao: this.item.plano.descricao,
-      valorPlano: this.formatarValorParaExibicao(this.item.plano.valorPlano),
-      quantidadeUsuarios: this.item.plano.quantidadeUsuarios,
-      vigenciaMeses: this.item.plano.vigenciaMeses,
-    });
-  } else {
-    this.form.reset();
-  }
-}
-
-onSubmitForm(): void {
-  if (this.form.valid) {
-    const formValue = { ...this.form.value };
-    formValue.valorPlano = this.ajustaStringMonetaria(formValue.valorPlano);
-
-    if (this.item.plano) {
-      this.planoService.Put(formValue, this.item.plano.id)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.snackBar.open('Plano alterado com sucesso!', 'Fechar', { duration: 2000 });
-            this.dialogRef.close('OK');
-          },
-          error: () => this.snackBar.open('Erro ao alterar plano!', 'Fechar', { duration: 2000 }),
-        });
     } else {
-      this.planoService.Post(formValue)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.snackBar.open('Plano cadastrado com sucesso!', 'Fechar', { duration: 2000 });
-            this.dialogRef.close('OK');
-          },
-          error: () => this.snackBar.open('Erro ao cadastrar plano!', 'Fechar', { duration: 2000 }),
-        });
+      this.isLoading = false;
     }
   }
-}
 
-ajustaStringMonetaria(val:any) : string{
-  return val.replace(/R\$/g, '') // Remove "R$"
-  .replace(/\s+/g, '') // Remove espaços
-  .replace(/\./g, '') // Remove o separador de milhar (ponto)
-  .replace(/,/g, '.'); // Substitui vírgula por ponto
-}
+  onClearForm(): void {
+    if (this.item.plano) {
+      this.form.patchValue({
+        descricao: this.item.plano.descricao,
+        valorPlano: this.formatarValorParaExibicao(this.item.plano.valorPlano),
+        quantidadeUsuarios: this.item.plano.quantidadeUsuarios,
+        vigenciaMeses: this.item.plano.vigenciaMeses,
+      });
+    } else {
+      this.form.reset();
+    }
+  }
 
-formatarValorParaExibicao(valor: number): string {
-  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
+  onSubmitForm(): void {
+    if (this.form.valid) {
+      const formValue = { ...this.form.value };
+      formValue.valorPlano = this.ajustaStringMonetaria(formValue.valorPlano);
 
-onClose(): void {
-  this.dialogRef.close();
-}
+      if (this.item.plano) {
+        this.planoService.Put(formValue, this.item.plano.id)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              this.snackBar.open('Plano alterado com sucesso!', 'Fechar', { duration: 2000 });
+              this.dialogRef.close('OK');
+            },
+            error: (err) => {
+                const message = this.getErrorMessage(err);
+                this.snackBar.open(message, 'Fechar', { duration: 5000 });
+            },
+          });
+      } else {
+        this.planoService.Post(formValue)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              this.snackBar.open('Plano cadastrado com sucesso!', 'Fechar', { duration: 2000 });
+              this.dialogRef.close('OK');
+            },
+            error: (err) => {
+                const message = this.getErrorMessage(err);
+                this.snackBar.open(message, 'Fechar', { duration: 5000 });
+            },
+          });
+        }
+    }
+  }
 
-ngOnDestroy(): void {
-  this.destroy$.next();
-  this.destroy$.complete();
-}
+  private getErrorMessage(err: any): string {
+    if (err?.error?.messages && Array.isArray(err.error.messages)) {
+      const lista = err.error.messages.map((el: string) => `* ${el}`).join('\n');
+      return 'Erros encontrados:\n' + lista;
+    } else if (err?.error?.message) {
+      return err.error.message;
+    }
+    return 'Erro desconhecido. Detalhes indisponíveis.';
+  }
+
+  ajustaStringMonetaria(val:any) : string{
+    return val.replace(/R\$/g, '') // Remove "R$"
+    .replace(/\s+/g, '') // Remove espaços
+    .replace(/\./g, '') // Remove o separador de milhar (ponto)
+    .replace(/,/g, '.'); // Substitui vírgula por ponto
+  }
+
+  formatarValorParaExibicao(valor: number): string {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  onClose(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

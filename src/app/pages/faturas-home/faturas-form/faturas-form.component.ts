@@ -63,9 +63,9 @@ export class FaturasFormComponent {
     this.form = this.fb.group({
       status: ['', Validators.required],
       inicioVigencia: [null , [Validators.required]],
-      fimVigencia: [null , [Validators.maxLength(40)]],
+      fimVigencia: [null , [Validators.maxLength(40), Validators.required]],
       dataVencimento: [null , [Validators.required]],
-      valorTotal: [0, [Validators.required]],
+      valorTotal: [null, [Validators.required]],
       planoId: ['', [Validators.required]],
       clienteId: ['', [Validators.required]],
       });
@@ -145,7 +145,10 @@ export class FaturasFormComponent {
               this.snackBar.open('Fatura alterada com sucesso!', 'Fechar', { duration: 2000 });
               this.dialogRef.close('OK');
             },
-            error: () => this.snackBar.open('Erro ao alterar fatura!', 'Fechar', { duration: 2000 }),
+            error: (err) => {
+                const message = this.getErrorMessage(err);
+                this.snackBar.open(message, 'Fechar', { duration: 5000 });
+            },
           });
       } else {
         this.faturaService.Post(formValue)
@@ -155,10 +158,23 @@ export class FaturasFormComponent {
               this.snackBar.open('Fatura cadastrada com sucesso!', 'Fechar', { duration: 2000 });
               this.dialogRef.close('OK');
             },
-            error: () => this.snackBar.open('Erro ao cadastrar fatura!', 'Fechar', { duration: 2000 }),
+            error: (err) => {
+                const message = this.getErrorMessage(err);
+                this.snackBar.open(message, 'Fechar', { duration: 5000 });
+            },
           });
       }
     }
+  }
+
+  private getErrorMessage(err: any): string {
+    if (err?.error?.messages && Array.isArray(err.error.messages)) {
+      const lista = err.error.messages.map((el: string) => `* ${el}`).join('\n');
+      return 'Erros encontrados:\n' + lista;
+    } else if (err?.error?.message) {
+      return err.error.message;
+    }
+    return 'Erro desconhecido. Detalhes indisponíveis.';
   }
 
   ajustaStringMonetaria(val:any) : string{

@@ -67,7 +67,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
       nome: [null, Validators.required],
       identidade: [null],
       orgaoExpedidor: [null],
-      dataNascimento: [''],
+      dataNascimento: ['', Validators.required],
       nomeFantasia: [null],
     })
     if (this.item.cliente) {
@@ -121,9 +121,10 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
               this.snackBar.open('Cliente editado com sucesso!', 'Fechar', { duration: 2000 });
               this.dialogRef.close('OK');
             },
-            error: () => {
-              this.snackBar.open('Erro ao editar cliente!', 'Fechar', { duration: 2000 });
-            }
+            error: (err) => {
+              const message = this.getErrorMessage(err);
+              this.snackBar.open(message, 'Fechar', { duration: 5000 });
+          },
           });
       } else {
         this.clientesService.postCliente(formValue)
@@ -133,12 +134,23 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
               this.snackBar.open('Cliente cadastrado com sucesso!', 'Fechar', { duration: 2000 });
               this.dialogRef.close('OK');
             },
-            error: () => {
-              this.snackBar.open('Erro ao cadastrar cliente!', 'Fechar', { duration: 2000 });
-            }
+            error: (err) => {
+              const message = this.getErrorMessage(err);
+              this.snackBar.open(message, 'Fechar', { duration: 5000 });
+          },
           });
       }
     }
+  }
+
+  private getErrorMessage(err: any): string {
+    if (err?.error?.messages && Array.isArray(err.error.messages)) {
+      const lista = err.error.messages.map((el: string) => `* ${el}`).join('\n');
+      return 'Erros encontrados:\n' + lista;
+    } else if (err?.error?.message) {
+      return err.error.message;
+    }
+    return 'Erro desconhecido. Detalhes indisponíveis.';
   }
 
   onClose(): void {
