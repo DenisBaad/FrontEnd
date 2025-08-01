@@ -1,0 +1,82 @@
+<div class="margem">
+
+  <div fxLayout="row wrap">
+    <mat-form-field class="form-field-status" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <mat-label>Filtro</mat-label>
+      <input matInput type="text" (input)="search($event)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+<div fxflex="100">
+  <button
+    mat-raised-button color="primary" aria-label="Adicionar nova fatura"
+    matTooltip="Adicionar nova fatura"
+    (click)="handleFaturaEvent(ADICIONAR_FATURA)" aria-label="Adicionar nova fatura" matTooltip="Adicionar nova fatura">
+    <mat-icon>add</mat-icon>
+    Adicionar
+</button>
+
+<ng-container>
+  <div class="report-container">
+<div class="table-container">
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{getStatusLabel(element.status)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="valorTotal">
+      <th mat-header-cell *matHeaderCellDef> Valor Total </th>
+      <td mat-cell *matCellDef="let element"> {{element.valorTotal | formatoMoeda}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="inicioVigencia">
+      <th mat-header-cell *matHeaderCellDef class="col-data"> Início Vigência </th>
+      <td mat-cell *matCellDef="let element" class="col-data">{{element.inicioVigencia | date: 'dd/MM/yyyy'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fimVigencia">
+      <th mat-header-cell *matHeaderCellDef class="col-data"> Fim Vigência </th>
+      <td mat-cell *matCellDef="let element" class="col-data">{{element.fimVigencia | date: 'dd/MM/yyyy'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="planoId">
+      <th mat-header-cell *matHeaderCellDef class="col-descricao"> Plano </th>
+      <td mat-cell *matCellDef="let element" class="col-descricao">
+        {{ getPlanoDescricao(element.planoId) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="clienteId">
+      <th mat-header-cell *matHeaderCellDef class="col-descricao"> Cliente </th>
+      <td mat-cell *matCellDef="let element" class="col-descricao">
+        {{ getNomeCliente(element.clienteId) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef class="col-acoes"></th>
+      <td mat-cell *matCellDef="let element" class="col-acoes">
+        <button mat-icon-button (click)="handleFaturaEvent(EDITAR_FATURA, element)" matTooltip="Editar" class="action-button edit blue-button">
+          <i class="fas fa-pen-to-square fa-sm"></i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+</div>
+</ng-container>
+
+<div class="paginator-wrapper">
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
+</div>
+</div>

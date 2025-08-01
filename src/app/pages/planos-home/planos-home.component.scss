@@ -1,0 +1,64 @@
+.actions-container {
+  display: flex;
+}
+.report-container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Garante que o container ocupe toda a largura disponível */
+  margin: 20px auto; /* Centraliza o container na tela */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Evita transbordamento do conteúdo */
+  box-sizing: border-box; /* Garante que padding e borda não afetem a largura total */
+}
+.parent-container {
+  padding: 0; /* Ajusta o preenchimento do contêiner pai se necessário */
+  margin: 0; /* Ajusta a margem do contêiner pai se necessário */
+}
+.table-container {
+  overflow-x: auto;
+  border-radius: 5px;
+}
+.table-container th {
+  background: linear-gradient(to top, rgba(175, 221, 243, 0.445), rgba(0, 248, 186, 0.26));
+  white-space: nowrap; /* Impede a quebra de linha nos cabeçalhos */
+  text-align: center; /* Alinha o texto à esquerda */
+  padding: 8px; /* Adiciona preenchimento nos cabeçalhos */
+}
+.table-container td {
+  text-align: center;
+  white-space: nowrap;
+}
+table {
+  width: 100%; /* Mantém a tabela ocupando toda a largura disponível */
+  border-collapse: collapse; /* Remove espaços entre as células */
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Alinha botões à direita */
+  margin-top: 15px; /* Margem opcional para separação */
+}
+.blue-button {
+  color: #2196F3;
+}
+.red-button {
+  color: #ff4c4c; /* Vermelho */
+}
+:host-context(body.theme-dark) .detalhes-button i {
+  color: white;
+}
+:host-context(body.theme-light) .detalhes-button i {
+  color: #333333;
+}
+.paginator-wrapper {
+  display: flex;
+  justify-content: center; /* Centraliza o paginator horizontalmente */
+  margin-top: 20px; /* Espaçamento acima do paginator */
+}
+.mat-paginator {
+  width: 100%; /* Ocupa toda a largura disponível */
+  max-width: 600px; /* Define a largura máxima */
+  white-space: nowrap; /* Impede quebra de linha */
+}

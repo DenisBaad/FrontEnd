@@ -1,0 +1,69 @@
+<div class="margem">
+
+  <div fxLayout="row wrap">
+    <mat-form-field class="form-field-status" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <mat-label>Filtro</mat-label>
+      <input matInput type="text" (input)="search($event)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+<div fxflex="100">
+  <button
+    mat-raised-button color="primary" aria-label="Adicionar novo plano"
+    matTooltip="Adicionar novo plano"
+    (click)="handlePlanoEvent(ADICIONAR_PLANO)" aria-label="Adicionar novo plano" matTooltip="Adicionar novo plano">
+    <mat-icon>add</mat-icon>
+    Adicionar
+  </button>
+
+<ng-container>
+  <div class="report-container">
+<div class="table-container">
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef> Descrição </th>
+      <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="valorPlano">
+      <th mat-header-cell *matHeaderCellDef> Valor Plano </th>
+      <td mat-cell *matCellDef="let element"> {{element.valorPlano | formatoMoeda}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantidadeUsuarios">
+      <th mat-header-cell *matHeaderCellDef> Quantidade Usuários </th>
+      <td mat-cell *matCellDef="let element"> {{element.quantidadeUsuarios}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="vigenciaMeses">
+      <th mat-header-cell *matHeaderCellDef> Vigência Meses </th>
+      <td mat-cell *matCellDef="let element"> {{element.vigenciaMeses}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef class="col-acoes"></th>
+      <td mat-cell *matCellDef="let element" class="col-acoes">
+        <button mat-icon-button (click)="handlePlanoEvent(EDITAR_PLANO, element)" matTooltip="Editar" class="action-button edit blue-button">
+          <i class="fas fa-pen-to-square fa-sm"></i>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+</div>
+</ng-container>
+
+<div class="paginator-wrapper">
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
+</div>
+
+</div>

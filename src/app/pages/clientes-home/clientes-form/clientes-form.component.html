@@ -61,15 +61,15 @@
 
   <div class="button">
 
-    <button mat-raised-button (click)="onClose()" type="button" matTooltip="Fechar" style="background-color: rgba(252, 6, 6, 0.781); color: aliceblue; border-radius: 5px; margin-right: 10px;">
+    <button mat-raised-button color="warn" (click)="onClose()" type="button" matTooltip="Fechar" style="margin-right: 10px;">
       Fechar
     </button>
 
-    <button mat-raised-button matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}" style="background-color: rgba(248, 6, 127, 0.664); color: aliceblue; border-radius: 5px; margin-right: 10px;" (click)="buttonResetOrCharge()">
+    <button mat-raised-button color="accent" matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}" style="margin-right: 10px;" (click)="buttonResetOrCharge()">
       {{ item?.titulo === EDITAR_CLIENTE ? 'Carregar' : 'Limpar' }}
     </button>
 
-    <button mat-raised-button matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}" style="background-color: blue; color: azure; border-radius: 5px;" (click)="save()">
+    <button mat-raised-button color="primary" matTooltip="{{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}" (click)="save()">
       {{ item?.titulo === EDITAR_CLIENTE ? 'Salvar' : 'Cadastrar'}}
     </button>
 

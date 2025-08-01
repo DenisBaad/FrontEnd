@@ -30,6 +30,10 @@ export class ClientesService {
     return this.http.get<ResponseCliente[]>(`${this.API_URL}/clientes`, this.httpOptions)
   }
 
+  getById(id: string): Observable<ResponseCliente> {
+    return this.http.get<ResponseCliente>(`${this.API_URL}/clientes/${id}`, this.httpOptions);
+  }
+
   putCliente(id: string, request: any): Observable<any> {
     return this.http.put<any>(`${this.API_URL}/clientes/${id}`, request, this.httpOptions);
   }

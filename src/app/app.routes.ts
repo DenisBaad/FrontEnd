@@ -17,4 +17,14 @@ export const routes: Routes = [
     canLoad: [AuthGuard],
     canActivate: [AuthGuard]
   },
+  {
+    path: 'planos',
+    loadChildren: () => import('./pages/planos-home/planos.routes').then(m => m.routes),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'faturas',
+    loadChildren: () => import('./pages/faturas-home/faturas.routes').then(m => m.routes),
+    canActivate: [AuthGuard]
+  },
 ];
