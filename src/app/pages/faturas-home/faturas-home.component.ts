@@ -13,12 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormatoMoedaPipe } from '../../shared/pipes/formato-moeda.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { GetFaturaResponse } from '../../shared/models/interfaces/responses/faturas/GetFaturaResponse';
-import { GetPlanoResponse } from '../../shared/models/interfaces/responses/planos/GetPlanoResponse';
-import { ResponseCliente } from '../../shared/models/interfaces/responses/clientes/ResponseCliente';
 import { EnumStatusFatura } from '../../shared/models/enums/enumStatusFatura';
 import { FaturaService } from '../../services/fatura.service';
-import { PlanoService } from '../../services/plano.service';
-import { ClientesService } from '../../services/clientes.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FaturasFormComponent } from './faturas-form/faturas-form.component';
@@ -46,11 +42,9 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   dataSource = new MatTableDataSource<GetFaturaResponse>();
-  displayedColumns: string[] = ['status', 'inicioVigencia', 'fimVigencia', 'valorTotal', 'planoId', 'clienteId', 'acoes'];
+  displayedColumns: string[] = ['status', 'inicioVigencia', 'fimVigencia', 'valorTotal', 'plano', 'cliente', 'acoes'];
   public faturaData!: GetFaturaResponse[] | undefined;
   public isLoading = true;
-  public planosList: Array<GetPlanoResponse>= [];
-  public clientesList: Array<ResponseCliente>= [];
   ADICIONAR_FATURA = 'Adicionar nova fatura';
   EDITAR_FATURA = 'Alterar fatura';
 
@@ -60,11 +54,9 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     { label: 'Pago', value: EnumStatusFatura.Pago },
   ];
 
-  constructor(private faturaService: FaturaService, private planoService: PlanoService, private clienteService:ClientesService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  constructor(private faturaService: FaturaService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.getPlanos();
-    this.getClientes();
     this.getFaturas();
   }
 
@@ -77,45 +69,17 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const value = target.value.trim().toLowerCase();
 
     this.dataSource.data = this.faturaData?.filter(fatura => {
-      const cliente = this.clientesList.find(c => c.id === fatura.clienteId);
-      const nomeCliente = cliente ? cliente.nome.toLowerCase() : '';
+      const nomeCliente = fatura.cliente?.nome?.toLowerCase() ?? '';
       return nomeCliente.includes(value);
     }) || [];
   }
 
-  public getPlanoDescricao(planoId: string): string {
-    const plano = this.planosList.find(cat => cat.id === planoId);
-    return plano ? plano.descricao : 'Plano não encontrada';
-  }
-  public getNomeCliente(clienteId: string): string {
-    const cliente = this.clientesList.find(cat => cat.id === clienteId);
-    return cliente ? cliente.nome : 'Cliente não encontrada';
+  public getPlanoDescricao(fatura: GetFaturaResponse): string {
+    return fatura.plano?.descricao ?? 'Plano não encontrado';
   }
 
-  public getPlanos(): void {
-    this.planoService.Get()
-    .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
-          this.planosList = response;
-        },
-        error: (err) => {
-          console.error('Erro ao buscar planos', err);
-        }
-      })
-  }
-
-  public getClientes(): void {
-    this.clienteService.getClientes()
-      .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
-          this.clientesList = response;
-        },
-        error: (err) => {
-          console.error('Erro ao buscar clientes', err);
-        }
-      })
+  public getNomeCliente(fatura: GetFaturaResponse): string {
+    return fatura.cliente?.nome ?? 'Cliente não encontrado';
   }
 
   getFaturas(): void {

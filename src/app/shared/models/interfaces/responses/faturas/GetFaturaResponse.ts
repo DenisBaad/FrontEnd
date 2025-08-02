@@ -1,7 +1,8 @@
 import { EnumStatusFatura } from "../../../enums/enumStatusFatura";
+import { ResponseCliente } from "../clientes/ResponseCliente";
 import { GetPlanoResponse } from "../planos/GetPlanoResponse";
 
-export interface GetFaturaResponse{
+export interface GetFaturaResponse {
   id?: string;
   clienteId: string;
   status: EnumStatusFatura;
@@ -15,6 +16,7 @@ export interface GetFaturaResponse{
   codBoleto: string;
   idTransacao: string;
   planoId: string;
-  planos: GetPlanoResponse [];
+  plano: GetPlanoResponse;
+  cliente: ResponseCliente;
 }
 
