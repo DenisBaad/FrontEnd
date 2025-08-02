@@ -62,6 +62,14 @@ table {
 :host-context(body.theme-light) .detalhes-button i {
   color: #333333;
 }
+
+:host-context(body.theme-dark) .filtro-search-field mat-icon {
+  color: white;
+}
+
+:host-context(body.theme-light) .filtro-search-field mat-icon {
+  color: #333333;
+}
 .paginator-wrapper {
   display: flex;
   justify-content: center; /* Centraliza o paginator horizontalmente */
