@@ -25,20 +25,8 @@ export class FaturaService {
     return this.http.post<void>(`${this.API_URL}/fatura`, fatura,this.httpOptions).pipe(take(1))
   }
 
-  Get(idPlano?: string, clienteId?: string): Observable<GetFaturaResponse[]> {
-    const params = new URLSearchParams();
-
-    if (idPlano) {
-      params.append('idPlano', idPlano);
-    }
-
-    if (clienteId) {
-      params.append('clienteId', clienteId);
-    }
-
-    const URL = `${this.API_URL}/fatura${params.toString() ? '?' + params.toString() : ''}`;
-
-    return this.http.get<GetFaturaResponse[]>(URL, this.httpOptions).pipe(take(1));
+  Get(): Observable<GetFaturaResponse[]> {
+    return this.http.get<GetFaturaResponse[]>(`${this.API_URL}/fatura`, this.httpOptions)
   }
 
   Put(fatura: RequestFatura, id?: string): Observable<void> {

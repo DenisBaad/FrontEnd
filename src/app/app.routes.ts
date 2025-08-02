@@ -20,16 +20,19 @@ export const routes: Routes = [
   {
     path: 'planos',
     loadChildren: () => import('./pages/planos-home/planos.routes').then(m => m.routes),
+    canLoad: [AuthGuard],
     canActivate: [AuthGuard]
   },
   {
     path: 'faturas',
     loadChildren: () => import('./pages/faturas-home/faturas.routes').then(m => m.routes),
+    canLoad: [AuthGuard],
     canActivate: [AuthGuard]
   },
   {
     path: 'relatorios',
     loadChildren: () => import('./pages/relatorio-faturas/relatorio.routes').then(m => m.routes),
+    canLoad: [AuthGuard],
     canActivate: [AuthGuard]
   }
 ];

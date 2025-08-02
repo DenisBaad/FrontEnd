@@ -118,10 +118,10 @@ export class FaturasHomeComponent implements OnInit, OnDestroy, AfterViewInit {
       })
   }
 
-  getFaturas(idPlano: string = '', clienteId: string = ''): void {
+  getFaturas(): void {
     this.isLoading = true;
 
-    this.faturaService.Get(idPlano, clienteId)
+    this.faturaService.Get()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
