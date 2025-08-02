@@ -78,6 +78,14 @@
       <mat-label>Nome Fantasia</mat-label>
       <input matInput formControlName="nomeFantasia">
     </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="25">
+      <mat-label>Contato (E-mail ou Telefone)</mat-label>
+      <input matInput formControlName="contato" [mask]="mask || null" (input)="onContatoInput()" autocomplete="off"/>
+      <mat-error *ngIf="clienteForm.get('contato')?.hasError('required')">
+        Este campo é obrigatório
+      </mat-error>
+    </mat-form-field>
   </div>
 
   <div class="button">

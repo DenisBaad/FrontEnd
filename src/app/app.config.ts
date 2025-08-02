@@ -11,11 +11,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MY_DATE_FORMATS } from './shared/types/date-format';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from './shared/directives/custom-mat-paginator-init';
+import { provideNgxMask } from 'ngx-mask';
 
 registerLocaleData(localePt);
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    [provideNgxMask()],
     provideZoneChangeDetection({ eventCoalescing: true }),
      provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
       provideHttpClient(),

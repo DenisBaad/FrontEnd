@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-clientes-form',
@@ -31,7 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
       MatSelectModule,
       MatFormField,
       MatTooltipModule,
-      MatDatepickerModule
+      MatDatepickerModule,
+      NgxMaskDirective
     ],
   templateUrl: './clientes-form.component.html',
   styleUrl: './clientes-form.component.scss'
@@ -41,6 +43,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
   clienteForm!: FormGroup;
   clienteData: ResponseCliente | undefined;
   isLoading = true;
+  mask: string | false | null = null;
 
   clienteTipo = [
     { label: 'Fisica', value: EnumTipoCliente.Fisica },
@@ -69,6 +72,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
       orgaoExpedidor: [null],
       dataNascimento: ['', Validators.required],
       nomeFantasia: [null],
+      contato: [null, Validators.required],
     })
     if (this.item.cliente) {
       this.isLoading = true;
@@ -82,7 +86,8 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
         identidade: this.item.cliente.identidade,
         orgaoExpedidor: this.item.cliente.orgaoExpedidor,
         dataNascimento: this.item.cliente.dataNascimento,
-        nomeFantasia: this.item.cliente.nomeFantasia
+        nomeFantasia: this.item.cliente.nomeFantasia,
+        contato: this.item.cliente.contato
       });
       this.isLoading = false;
     }, 500);
@@ -102,7 +107,8 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
         identidade: this.item.cliente.identidade,
         orgaoExpedidor: this.item.cliente.orgaoExpedidor,
         dataNascimento: this.item.cliente.dataNascimento,
-        nomeFantasia: this.item.cliente.nomeFantasia
+        nomeFantasia: this.item.cliente.nomeFantasia,
+        contato: this.item.cliente.contato
       })
     } else {
       this.clienteForm.reset();
@@ -112,6 +118,10 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
   save() {
     if (this.clienteForm.valid) {
       const formValue = { ...this.clienteForm.value };
+
+      if (formValue.contato && /^\d+$/.test(formValue.contato.replace(/\s/g, ''))) {
+        formValue.contato = formValue.contato.replace(/\D/g, '');
+      }
 
       if (this.item.cliente){
         this.clientesService.putCliente(this.item.cliente.id, formValue)
@@ -140,6 +150,19 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
           },
           });
       }
+    }
+  }
+
+  onContatoInput() {
+    const valor = this.clienteForm.get('contato')?.value || '';
+    const apenasNumeros = valor.replace(/\D/g, '');
+
+    if (/^\d+$/.test(apenasNumeros) && apenasNumeros.length > 0) {
+      // Aplica máscara conforme o número de dígitos
+      this.mask = apenasNumeros.length > 10 ? '(00) 00000-0000' : '(00) 0000-0000';
+    } else {
+      // Remove máscara para texto/email
+      this.mask = null;
     }
   }
 

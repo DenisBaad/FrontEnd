@@ -12,4 +12,5 @@ export interface ResponseCliente {
   orgaoExpedidor?: string;
   dataNascimento?: Date;
   nomeFantasia?: string;
+  contato: string;
 }

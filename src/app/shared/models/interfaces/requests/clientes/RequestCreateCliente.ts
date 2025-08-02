@@ -11,4 +11,5 @@ export interface RequestCreateCliente {
   orgaoExpedidor?: string;
   dataNascimento?: Date;
   nomeFantasia?: string;
+  contato: string;
 }
