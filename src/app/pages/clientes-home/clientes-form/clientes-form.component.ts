@@ -155,13 +155,10 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
 
   onContatoInput() {
     const valor = this.clienteForm.get('contato')?.value || '';
-    const apenasNumeros = valor.replace(/\D/g, '');
 
-    if (/^\d+$/.test(apenasNumeros) && apenasNumeros.length > 0) {
-      // Aplica máscara conforme o número de dígitos
-      this.mask = apenasNumeros.length > 10 ? '(00) 00000-0000' : '(00) 0000-0000';
+    if (/^\d/.test(valor)) {
+      this.mask = '(00) 00000-0000';
     } else {
-      // Remove máscara para texto/email
       this.mask = null;
     }
   }
