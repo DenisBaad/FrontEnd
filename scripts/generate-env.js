@@ -9,4 +9,4 @@ export const environment = {
 `;
 
 fs.writeFileSync(targetPath, envConfigFile);
-console.log(`Arquivo environment.prod.ts gerado em: ${targetPath}`);
+console.log(`Arquivo environment.prod.ts gerado em:  ${targetPath}`);
