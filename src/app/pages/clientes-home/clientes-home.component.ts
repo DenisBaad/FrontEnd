@@ -19,7 +19,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { ClientesFormComponent } from './clientes-form/clientes-form.component';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-clientes-home',
@@ -138,28 +137,6 @@ export class ClientesHomeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
         break;
-      }
-
-      case this.DELETAR_CLIENTE: {
-        if (cliente?.id) {
-          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-            width: '400px',
-            data: { title: 'Confirmar exclusão', message: 'Você tem certeza que deseja excluir este cliente?' }
-          });
-
-          dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
-            if (result === true) {
-              this.clientesService.delete(cliente.id as string).pipe(
-                takeUntil(this.destroy$)
-              ).subscribe({
-                next: () => {
-                  this.snackBar.open('Cliente excluído com sucesso!', 'Fechar', { duration: 2000 });
-                  this.getClientes();
-                },
-              });
-            }
-          });
-        }
       }
     }
   }

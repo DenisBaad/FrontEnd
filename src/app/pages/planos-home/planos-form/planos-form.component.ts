@@ -75,7 +75,7 @@ export class PlanosFormComponent implements OnInit, OnDestroy {
       formValue.valorPlano = this.ajustaStringMonetaria(formValue.valorPlano);
 
       if (this.item.plano) {
-        this.planoService.Put(formValue, this.item.plano.id)
+        this.planoService.Put(formValue, this.item.plano._id)
           .pipe(take(1))
           .subscribe({
             next: () => {

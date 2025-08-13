@@ -2,7 +2,7 @@ import { EnumStatusCliente } from "../../../enums/enumStatusCliente";
 import { EnumTipoCliente } from "../../../enums/enumTipoCliente";
 
 export interface ResponseCliente {
-  id: string;
+  _id: string;
   codigo: number;
   tipo: EnumTipoCliente;
   cpfCnpj: string;

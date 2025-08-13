@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { environment } from '../../environment/environment';
 import { GetFaturaResponse } from '../shared/models/interfaces/responses/faturas/GetFaturaResponse';
 import { map, Observable, take } from 'rxjs';
 import { RequestFatura } from '../shared/models/interfaces/requests/faturas/RequestFatura';
 import { EnumStatusFatura } from '../shared/models/enums/enumStatusFatura';
+import { environment } from '../../environment/environment.prod';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,15 +23,15 @@ export class FaturaService {
   };
 
   Post(fatura: RequestFatura): Observable<void> {
-    return this.http.post<void>(`${this.API_URL}/fatura`, fatura,this.httpOptions).pipe(take(1))
+    return this.http.post<void>(`${this.API_URL}/faturas`, fatura,this.httpOptions).pipe(take(1))
   }
 
   Get(): Observable<GetFaturaResponse[]> {
-    return this.http.get<GetFaturaResponse[]>(`${this.API_URL}/fatura`, this.httpOptions)
+    return this.http.get<GetFaturaResponse[]>(`${this.API_URL}/faturas`, this.httpOptions)
   }
 
   Put(fatura: RequestFatura, id?: string): Observable<void> {
-    return this.http.put<void>(`${this.API_URL}/fatura/${id}`, fatura, this.httpOptions).pipe(take(1))
+    return this.http.put<void>(`${this.API_URL}/faturas/${id}`, fatura, this.httpOptions).pipe(take(1))
   }
 
   public getRelatorioFaturas(usuarioLogadoNome: string, dataAbertura: Date | null, dataFechamento: Date | null, status: EnumStatusFatura | null, clientesSelecionados: string[]): Observable<any> {
@@ -40,7 +41,7 @@ export class FaturaService {
     .map(id => `clienteId=${encodeURIComponent(id)}`)
     .join('&');
 
-    let url = `${this.API_URL}/fatura/gerar-relatorio-faturas-clientes?usuarioNome=${encodeURIComponent(usuarioLogadoNome)}`;
+    let url = `${this.API_URL}/faturas/gerar-relatorio-faturas-clientes?usuarioNome=${encodeURIComponent(usuarioLogadoNome)}`;
 
     if (clientesSelecionados.length > 0) {
       url += `&${clienteQuery}`;

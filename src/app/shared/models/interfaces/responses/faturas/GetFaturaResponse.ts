@@ -3,7 +3,7 @@ import { ResponseCliente } from "../clientes/ResponseCliente";
 import { GetPlanoResponse } from "../planos/GetPlanoResponse";
 
 export interface GetFaturaResponse {
-  id?: string;
+  _id?: string;
   clienteId: string;
   status: EnumStatusFatura;
   inicioVigencia: Date;

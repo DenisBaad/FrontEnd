@@ -60,7 +60,7 @@
       <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33">
         <mat-label>Plano</mat-label>
         <mat-select [formControlName]="'planoId'">
-          <mat-option *ngFor="let plano of planos" [value]="plano.id">
+          <mat-option *ngFor="let plano of planos" [value]="plano._id">
             {{ plano.descricao }}
           </mat-option>
         </mat-select>
@@ -72,7 +72,7 @@
       <mat-form-field appearance="fill" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33">
         <mat-label>Cliente</mat-label>
         <mat-select [formControlName]="'clienteId'">
-          <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+          <mat-option *ngFor="let cliente of clientes" [value]="cliente._id">
             {{ cliente.nome }}
           </mat-option>
         </mat-select>

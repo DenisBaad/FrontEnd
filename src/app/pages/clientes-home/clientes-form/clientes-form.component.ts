@@ -124,7 +124,7 @@ export class ClientesFormComponent implements OnInit, OnDestroy {
       }
 
       if (this.item.cliente){
-        this.clientesService.putCliente(this.item.cliente.id, formValue)
+        this.clientesService.putCliente(this.item.cliente._id, formValue)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {

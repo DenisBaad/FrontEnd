@@ -1,10 +1,10 @@
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, take } from 'rxjs';
 import { LoginResponse } from '../shared/models/interfaces/responses/login/loginResponse';
 import { LoginRequest } from '../shared/models/interfaces/requests/login/loginRequest';
+import { environment } from '../../environment/environment.prod';
 
 @Injectable({
   providedIn: 'root'

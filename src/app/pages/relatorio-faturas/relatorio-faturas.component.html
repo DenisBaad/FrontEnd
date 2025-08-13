@@ -16,7 +16,7 @@
         <mat-form-field class="form-field-status" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="80" fxFlex.xl="80">
           <mat-label>Cliente</mat-label>
           <mat-select formControlName="clientesSelecionados" multiple>
-            <mat-option *ngFor="let cliente of clientesDatas" [value]="cliente.id">
+            <mat-option *ngFor="let cliente of clientesDatas" [value]="cliente._id">
               {{ cliente.nome }}  {{ cliente.cpfCnpj }}
             </mat-option>
           </mat-select>

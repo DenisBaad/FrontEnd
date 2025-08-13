@@ -138,7 +138,7 @@ export class FaturasFormComponent {
       formValue.clienteId = this.form.value.clienteId ?? null;
 
       if (this.item.fatura) {
-        this.faturaService.Put(formValue, this.item.fatura.id)
+        this.faturaService.Put(formValue, this.item.fatura._id)
           .pipe(take(1))
           .subscribe({
             next: () => {
